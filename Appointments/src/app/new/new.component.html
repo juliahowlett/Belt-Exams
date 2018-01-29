@@ -1,0 +1,26 @@
+<h2>
+    New Appointment</h2>
+<form (submit)='OnSubmit($event, form)' #form="ngForm">
+    <div>
+        <label for="appointment">Date: </label>
+        <input type="date" #appdate='ngModel' [(ngModel)]='item.appdate' name='appdate' min="{{ DateNow | date:'yyyy-MM-dd' }}" required/>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <label for="appointment">Time: </label>
+        <input type="time" #apptime='ngModel' [(ngModel)]='item.apptime' name='apptime' min="07:59" max='17:01' required/>
+    </div>
+    <br><br>
+    <div>
+        <label for="complaint">Complaint: </label>
+        <textarea cols="40" rows="2" [(ngModel)]='item.complaint' name='complaint' minlength='10' required></textarea>
+    </div>
+    <br><br>
+
+    <div>
+        <input type="hidden" #owner='ngModel' [(ngModel)]='item.owner' name='owner' value="{{userID}}">
+        <button [routerLink]="['/dashboard']">Cancel</button>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+
+        <button name='submit' *ngIf='form.valid'>Add Appoinment</button>
+    </div>
+
+</form>

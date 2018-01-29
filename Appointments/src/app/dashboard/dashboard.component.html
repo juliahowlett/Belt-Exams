@@ -1,0 +1,47 @@
+<nav>
+
+    <button (click)="logout(userId)">Logout</button>
+</nav>
+
+<div *ngIf='errorMessages.length'>
+    <ul>
+        <li *ngFor='let error of errorMessages'> {{ error }} </li>
+    </ul>
+</div>
+<div>
+    <form (ngSubmit)="search($event); searchform.reset()" #searchform="ngForm">
+        <p>Search
+            <input type="text" name='searchString' minlength='3' [(ngModel)]='searchString' required>
+            <button [hidden]='searchform.invalid'>Search</button></p>
+    </form>
+
+</div>
+<h3>
+    Doctor's Appointments:
+</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Patient Name</th>
+            <th>Complaint</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let item of items | sortBy :'appdate'">
+        <tr *ngIf="item.appdate >= ShowDate">
+            <td>{{ item.appdate | date:'MMM dd, yyyy' }} </td>
+            <td>{{ item.appdate | date:"HH:mm a" }}</td>
+            <td>{{ item.owner['username'] }}</td>
+            <td>{{ item.complaint }}
+                <button *ngIf="userID == item.owner._id && item.appdate >= CancelDate" (click)="delete(item._id)"> Delete </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<div>
+    <button [routerLink]="['/new']">Create a new Appointment</button> &nbsp;&nbsp;&nbsp;
+</div>
+<!-- | date:"HH:mm a"  userID == item.owner._id && item.appdate >= CancelDate-->
